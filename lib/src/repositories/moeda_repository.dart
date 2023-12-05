@@ -16,21 +16,24 @@ class MoedaRepository {
 
   List<MoedaModel> parseMoedas(String xmlRaw) {
     final document = XmlDocument.parse(xmlRaw);
-    final elements = document.children.first.children.whereType<XmlElement>();
+
+    final elements = document.children.last.children.whereType<XmlElement>();
     final moedas = <MoedaModel>[];
 
     for (var element in elements) {
       final model = MoedaModel(
-        name: element.innerText,
         code: element.localName,
+        name: element.innerText,
       );
       moedas.add(model);
     }
+
     return moedas;
   }
 
   Future<double> cotacao(MoedaModel moedaIn, MoedaModel moedaOut) async {
     final search = '${moedaIn.code}-${moedaOut.code}';
+
     final response = await client
         .get(Uri.parse('https://economia.awesomeapi.com.br/json/last/$search'));
     final jsonRaw = response.body;

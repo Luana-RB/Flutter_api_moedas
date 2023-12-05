@@ -5,7 +5,7 @@ void main() {
   test('Converter um xml em uma lista de MoedaModel', () {
     final repository = MoedaRepository();
     final moedas = repository.parseMoedas(xml);
-    print(moedas);
+    //print(moedas);
   });
 
   test('Pegar apenas a cotação', () {

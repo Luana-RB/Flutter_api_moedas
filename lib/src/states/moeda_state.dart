@@ -1,24 +1,28 @@
-import 'package:api_moedas/src/models/moeda_model.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import '../models/moeda_model.dart';
 
 class MoedaState {
   final List<MoedaModel> moedas;
+
   final MoedaModel moedaIn;
   final MoedaModel moedaOut;
 
   final String result;
 
-  MoedaState(
-      {required this.moedas,
-      required this.moedaIn,
-      required this.moedaOut,
-      required this.result});
+  MoedaState({
+    required this.moedas,
+    required this.moedaIn,
+    required this.moedaOut,
+    required this.result,
+  });
 
   factory MoedaState.init() {
     return MoedaState(
-        moedas: [],
-        moedaIn: MoedaModel(name: '', code: ''),
-        moedaOut: MoedaModel(name: '', code: ''),
-        result: '');
+      moedaIn: MoedaModel.init(),
+      moedaOut: MoedaModel.init(),
+      moedas: const [],
+      result: '0',
+    );
   }
 
   MoedaState copyWith({
@@ -28,9 +32,10 @@ class MoedaState {
     String? result,
   }) {
     return MoedaState(
-        moedas: moedas ?? this.moedas,
-        moedaIn: moedaIn ?? this.moedaIn,
-        moedaOut: moedaOut ?? this.moedaOut,
-        result: result ?? this.result);
+      moedas: moedas ?? this.moedas,
+      moedaIn: moedaIn ?? this.moedaIn,
+      moedaOut: moedaOut ?? this.moedaOut,
+      result: result ?? this.result,
+    );
   }
 }
