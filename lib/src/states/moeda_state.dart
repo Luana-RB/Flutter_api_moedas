@@ -1,4 +1,4 @@
-import 'package:api_moedas/models/moeda_model.dart';
+import 'package:api_moedas/src/models/moeda_model.dart';
 
 class MoedaState {
   final List<MoedaModel> moedas;
