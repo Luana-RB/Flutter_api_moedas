@@ -1,12 +1,24 @@
 import 'package:api_moedas/src/models/moeda_model.dart';
-import 'package:api_moedas/src/models/states/moeda_state.dart';
+import 'package:api_moedas/src/repositories/moeda_repository.dart';
+import 'package:api_moedas/src/states/moeda_state.dart';
 import 'package:flutter/material.dart';
 
 class MoedaStore extends ValueNotifier<MoedaState> {
+  final repository = MoedaRepository();
   MoedaStore() : super(MoedaState.init());
-  Future<void> getMoedas() async {}
 
-  Future<void> converter() async {}
+  Future<void> getMoedas() async {
+    final moedas = await repository.getMoedas();
+    value = value.copyWith(moedas: moedas);
+  }
+
+  Future<void> converter(String valorRaw) async {
+    final cotacao = await repository.cotacao(value.moedaIn, value.moedaOut);
+    final valor = double.parse(valorRaw);
+    final resultado = valor * cotacao;
+
+    value = value.copyWith(result: resultado.toStringAsFixed(2));
+  }
 
   Future<void> selecionarMoedaIn(MoedaModel model) async {
     value = value.copyWith(moedaIn: model);
@@ -14,5 +26,12 @@ class MoedaStore extends ValueNotifier<MoedaState> {
 
   Future<void> selecionarMoedaOut(MoedaModel model) async {
     value = value.copyWith(moedaOut: model);
+  }
+
+  void switchMoedas() {
+    value = value.copyWith(
+      moedaIn: value.moedaOut,
+      moedaOut: value.moedaIn,
+    );
   }
 }
